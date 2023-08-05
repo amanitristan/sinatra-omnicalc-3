@@ -4,13 +4,10 @@ require "http"
 require "json"
 
 get("/") do
-  "
-  <h1>Welcome to your Sinatra App!</h1>
-  <p>Define some routes in app.rb</p>
-  "
+  erb(:homepage)
 end
 
-get ("/umbrella") do
+get("/umbrella") do
   erb(:umbrella_form)
 end
 
@@ -51,7 +48,23 @@ get("/umbrella_result") do
 
   next_hour = data.at(0)
 
-  @precip_prob = next_hour.fetch("precipProbability")
+  @precip_prob = next_hour.fetch("precipProbability").to_s
+
+=begin -- CODE FOR UMBRELLA_RESULT IS NOT WORKING
+    <% if @precip_prob >= 50 %>
+        You will probably need an umbrella.
+      <% else %>
+         You probably won't need an umbrella.
+      <% end %>
+=end
 
   erb(:umbrella_result)
+end
+
+get("/message") do
+  erb(:message_form)
+end
+
+get("/message_result") do
+  erb(:message_result)
 end
