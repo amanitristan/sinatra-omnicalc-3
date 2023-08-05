@@ -1,8 +1,50 @@
 <h1>Should I take an umbrella?</h1>
 
-<dl>
-  <dt>User's Location</dt>
+<div>
+  <dl>
+    <dt>User's Location</dt>
     <dd><%= @user_location %></dd>
-</dl>
+  </dl>
+</div>
+
+<div>
+  <dl>
+    <dt>Latitude</dt>
+    <dd><%= @latitude %></dd>
+  </dl>
+</div>
+
+<div>
+  <dl>
+    <dt>Longitude</dt>
+    <dd><%= @longitude %></dd>
+  </dl>
+</div>
+
+<div>
+  <dl>
+    <dt>Current Temperature</dt>
+    <dd><%= @temp %></dd>
+  </dl>
+</div>
+
+<div>
+  <dl>
+    <dt>Current Summary</dt>
+    <dd><%= @summary %></dd>
+  </dl>
+</div>
+
+<div>
+  <dl>
+    <dt>Should I take an umbrella?</dt>
+    <dd>
+      <% if @precip_prob >= 50 %>
+        "You probably won't need an umbrella."
+      <% else %>
+         "You will probably need an umbrella."
+    </dd>
+  </dl>
+</div>
 
 <a href="/umbrella">Go back</a>
