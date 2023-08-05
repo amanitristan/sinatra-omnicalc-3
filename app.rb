@@ -8,7 +8,7 @@ get("/") do
 end
 
 get("/umbrella") do
- 
+
   #HELP ADDING THIS TO THE UMBRELLA_FORM
   # <p>You last searched for:</p>
 
@@ -33,18 +33,18 @@ get("/umbrella_result") do
   results = parsed_response.fetch("results")
 
   first_results = results.at(0)
-  
+
   geo = first_results.fetch("geometry")
-  
+
   loc = geo.fetch("location")
-  
+
   @latitude = loc.fetch("lat")
   @longitude = loc.fetch("lng")
 
   pirate_weather_url = "https://api.pirateweather.net/forecast/" + ENV.fetch("PIRATE_WEATHER_KEY") + "/#{@latitude},#{@longitude}"
 
   response = HTTP.get(pirate_weather_url).to_s
-  
+
   parsed_respo = JSON.parse(response)
 
   currently = parsed_respo.fetch("currently")
@@ -82,7 +82,36 @@ end
 get("/message_result") do
   @user_message = params.fetch("user_message")
 
-  gpt_url = "https://chatwithgpt.netlify.app/" + @user_message + "&key=" + ENV.fetch("GPT4_KEY")
+  request_headers_hash = {
+    "Authorization" => "Bearer #{ENV.fetch("GPT4_KEY")}",
+    "content-type" => "application/json",
+  }
+
+  request_body_hash = {
+    "model" => "gpt-3.5-turbo",
+    "messages" => [
+      {
+        "role" => "system",
+        "content" => "You are a helpful assistant who talks like Shakespeare.",
+      },
+      {
+        "role" => "user",
+        "content" => @user_message,
+      },
+    ],
+  }
+
+  request_body_json = JSON.generate(request_body_hash)
+
+  raw_response = HTTP.headers(request_headers_hash).post(
+    "https://api.openai.com/v1/chat/completions",
+    :body => request_body_json,
+  ).to_s
+
+  parsed_response = JSON.parse(raw_response)
+  #pp parsed_response
+
+  @gpt_response = parsed_response.dig("choices", 0, "message", "content")
   
   erb(:message_result)
 end
