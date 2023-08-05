@@ -80,5 +80,9 @@ get("/message") do
 end
 
 get("/message_result") do
+  @user_message = params.fetch("user_message")
+
+  gpt_url = "https://chatwithgpt.netlify.app/" + @user_message + "&key=" + ENV.fetch("GPT4_KEY")
+  
   erb(:message_result)
 end
