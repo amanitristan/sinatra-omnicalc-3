@@ -58,6 +58,10 @@ get("/umbrella_result") do
       <% end %>
 =end
 
+  #cookies["last_loc"] = @user_location
+  #cookies["last_lat"] = @latitude
+  #cookies["last_lng"] = @longitude
+
   erb(:umbrella_result)
 end
 
