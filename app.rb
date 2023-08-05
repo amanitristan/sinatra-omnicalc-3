@@ -9,9 +9,11 @@ get("/") do
 end
 
 get ("/umbrella") do
-  erb(:umbrella)
+  erb(:umbrella_form)
 end
 
 get("/umbrella_result") do
+  @user_location = params.fetch("user_loc")
+
   erb(:umbrella_result)
 end
