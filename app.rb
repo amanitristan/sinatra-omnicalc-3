@@ -8,6 +8,16 @@ get("/") do
 end
 
 get("/umbrella") do
+ 
+  #HELP ADDING THIS TO THE UMBRELLA_FORM
+  # <p>You last searched for:</p>
+
+  # <ul>
+  #   <li><%= cookies["last_loc"] %></li>
+  #   <li><%= cookies["last_lat"] %></li>
+  #   <li><%= cookies["last_lng"] %></li>
+  # </ul>
+
   erb(:umbrella_form)
 end
 
