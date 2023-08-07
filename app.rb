@@ -116,7 +116,7 @@ get("/message_result") do
   erb(:message_result)
 end
 
-get("/chat")
+get("/chat") do
   @your_message = params.fetch("your_message")
 
   # request_headers_hash = {
