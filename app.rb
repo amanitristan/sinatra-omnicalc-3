@@ -119,36 +119,36 @@ end
 get("/chat") do
   @your_message = params.fetch("your_message")
 
-  # request_headers_hash = {
-  #   "Authorization" => "Bearer #{ENV.fetch("GPT4_KEY")}",
-  #   "content-type" => "application/json",
-  # }
+  request_headers_hash = {
+    "Authorization" => "Bearer #{ENV.fetch("GPT4_KEY")}",
+    "content-type" => "application/json",
+  }
 
-  # request_body_hash = {
-  #   "model" => "gpt-3.5-turbo",
-  #   "messages" => [
-  #     {
-  #       "role" => "system",
-  #       "content" => "You are a helpful assistant who talks like a valley girl.",
-  #     },
-  #     {
-  #       "role" => "user",
-  #       "content" => @user_message,
-  #     },
-  #   ],
-  # }
+  request_body_hash = {
+    "model" => "gpt-3.5-turbo",
+    "messages" => [
+      {
+        "role" => "system",
+        "content" => "You are a helpful assistant who talks like a valley girl.",
+      },
+      {
+        "role" => "user",
+        "content" => @your_message,
+      },
+    ],
+  }
 
-  # request_body_json = JSON.generate(request_body_hash)
+  request_body_json = JSON.generate(request_body_hash)
 
-  # raw_response = HTTP.headers(request_headers_hash).post(
-  #   "https://api.openai.com/v1/chat/completions",
-  #   :body => request_body_json,
-  # ).to_s
+  raw_response = HTTP.headers(request_headers_hash).post(
+    "https://api.openai.com/v1/chat/completions",
+    :body => request_body_json,
+  ).to_s
 
-  # parsed_response = JSON.parse(raw_response)
-  # #pp parsed_response
+  parsed_response = JSON.parse(raw_response)
+  pp parsed_response
 
-  # @gpt_message = parsed_response.dig("choices", 0, "message", "content")
+  #@gpt_message = parsed_response.dig("choices", 0, "message", "content")
 
   erb(:chat_form)
 end
